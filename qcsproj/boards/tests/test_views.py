@@ -1,9 +1,9 @@
-from django.urls import reverse
+from django.contrib.auth.models import User
+from django.urls import reverse, resolve
 from django.test import TestCase
-from django.urls import resolve
+
 from ..views import home, board_topics, new_topic
-from qcsproj.boards.models import Board, Topic, Post
-from ..models import User
+from ..models import Board, Topic, Post
 from ..forms import NewTopicForm
 
 
@@ -141,3 +141,14 @@ class NewTopicTests(TestCase):
         form = response.context.get('form')
         self.assertEquals(response.status_code, 200)
         self.assertTrue(form.errors)
+
+
+class LoginRequiredNewTopicTests(TestCase):
+    def setUp(self):
+        Board.objects.create(name='Django', description='Django board.')
+        self.url = reverse('new_topic', kwargs={'pk': 1})
+        self.response = self.client.get(self.url)
+
+    def test_redirection(self):
+        login_url = reverse('login')
+        self.assertRedirects(self.response, '{login_url}?next={url}'.format(login_url=login_url, url=self.url))
