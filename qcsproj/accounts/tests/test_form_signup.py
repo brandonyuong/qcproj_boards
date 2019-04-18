@@ -1,5 +1,5 @@
 from django.test import TestCase
-from ..forms import SignUpForm
+from qcsproj.accounts.forms import SignUpForm
 
 
 class SignUpFormTest(TestCase):
