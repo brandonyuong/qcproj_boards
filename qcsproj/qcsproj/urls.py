@@ -22,7 +22,7 @@ from boards import views
 
 
 urlpatterns = [
-    path('', views.home, name='home'),
+    re_path(r'^$', views.BoardListView.as_view(), name='home'),
     path('admin/', admin.site.urls),
     re_path(r'^boards/(?P<pk>\d+)/topics/(?P<topic_pk>\d+)/$', views.topic_posts,
             name='topic_posts'),
