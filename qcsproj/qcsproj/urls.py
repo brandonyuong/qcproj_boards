@@ -24,7 +24,8 @@ from boards import views
 urlpatterns = [
     re_path(r'^$', views.BoardListView.as_view(), name='home'),
     path('admin/', admin.site.urls),
-    re_path(r'^boards/(?P<pk>\d+)/topics/(?P<topic_pk>\d+)/$', views.PostListView.as_view(), name='topic_posts'),
+    re_path(r'^boards/(?P<pk>\d+)/topics/(?P<topic_pk>\d+)/$',
+            views.PostListView.as_view(), name='topic_posts'),
 
     re_path(r'^settings/password/$',
             auth_views.PasswordChangeView.as_view(template_name='password_change.html'),
@@ -44,7 +45,8 @@ urlpatterns = [
             auth_views.PasswordResetDoneView.as_view(
                 template_name='password_reset_done.html'),
             name='password_reset_done'),
-    re_path(r'^reset/(?P<uidb64>[0-9A-Za-z_\-]+)/(?P<token>[0-9A-Za-z]{1,13}-[0-9A-Za-z]{1,20})/$',
+    re_path(r'^reset/(?P<uidb64>[0-9A-Za-z_\-]+)/(?P<token>[0-9A-Za-z]{1,13}-[0-9A-Za-z]'
+            r'{1,20})/$',
             auth_views.PasswordResetConfirmView.as_view(
                 template_name='password_reset_confirm.html'),
             name='password_reset_confirm'),
@@ -63,4 +65,6 @@ urlpatterns = [
             views.reply_topic, name='reply_topic'),
     re_path(r'^boards/(?P<pk>\d+)/topics/(?P<topic_pk>\d+)/posts/(?P<post_pk>\d+)/edit/$',
             views.PostUpdateView.as_view(), name='edit_post'),
+    re_path(r'^settings/account/$', accounts_views.UserUpdateView.as_view(),
+            name='my_account'),
 ]
